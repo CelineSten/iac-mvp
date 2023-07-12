@@ -5,6 +5,7 @@ on:
         required: true
         type: string
 
+jobs:
   tf-apply:
     needs: [manual-approval]
     runs-on: ubuntu-latest
