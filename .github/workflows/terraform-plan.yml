@@ -31,13 +31,13 @@ jobs:
           terraform plan -out=tfplan
 
       - name: Upload Artifacts and Plan
-      uses: actions/upload-artifact@v3
-      with:
-        name: terraform
-        path: |
-          terraform/.terraform
-          terraform/modules/*
-          terraform/*.tf
-          terraform/*.lock.hcl
-          terraform/tfplan
-        if-no-files-found: error
+        uses: actions/upload-artifact@v3
+        with:
+          name: terraform
+          path: |
+            terraform/.terraform
+            terraform/modules/*
+            terraform/*.tf
+            terraform/*.lock.hcl
+            terraform/tfplan
+          if-no-files-found: error
