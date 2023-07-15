@@ -1,0 +1,31 @@
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'main'
+    paths:
+      - './.github/workflows/terraform-poc.yml'
+
+env:
+  TAG_NAME: v${{ github.event.number }}
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Echo
+        run:
+          echo "The PR was merged"
+
+      - name: Create Tag
+        run: |
+          git tag $TAG_NAME
+          git push --tags
+        
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:
+          gh release create $TAG_NAME --generate-notes

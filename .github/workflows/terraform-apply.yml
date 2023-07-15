@@ -1,0 +1,36 @@
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+
+jobs:
+  tf-apply:
+    needs: [manual-approval]
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: AZ CLI login
+        uses: azure/login@v1
+        with:
+          client-id: {{ vars.ARM_CLIENT_ID }}
+          tenant-id: {{ vars.ARM_TENANT_ID }}
+          subscription-id: {{ vars.ARM_SUBSCRIPTION_ID }}
+
+      - name: Get Plan
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform
+      
+      - name: Set Permissions
+        run:
+          chmod -R u+x .terraform
+
+      - name: Terraform Apply
+        working-directory: terraform
+        run:
+          terraform apply tfplan

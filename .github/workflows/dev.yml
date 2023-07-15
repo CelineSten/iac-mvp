@@ -1,0 +1,27 @@
+on:
+  workflow_dispatch:
+
+env:
+  ARM_CLIENT_ID: {{ vars.ARM_CLIENT_ID }}
+  ARM_TENANT_ID: {{ vars.ARM_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: {{ vars.ARM_SUBSCRIPTION_ID }}
+
+jobs:
+  terraform-plan:
+    uses: ./.github/workflows/terraform-plan.yml
+    with:
+      ENVIRONMENT: dev
+
+  manual-approval:
+    needs: [tf-plan]
+    runs-on: ubuntu-latest
+    environment: manual-approval
+    steps:
+      - name: Approval
+        run: echo "Approved"
+
+  terraform-apply:
+    needs: [manual-approval]
+    uses: ./.github/workflows/terraform-apply.yml
+    with:
+      ENVIRONMENT: dev

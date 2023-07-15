@@ -1,0 +1,30 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  tf-plan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: AZ CLI login
+        uses: azure/login@v1
+        with:
+          client-id: {{ vars.ARM_CLIENT_ID }}
+          tenant-id: {{ vars.ARM_TENANT_ID }}
+          subscription-id: {{ vars.ARM_SUBSCRIPTION_ID }}
+        
+      - name: Terraform Init
+        working-directory: terraform
+        run:
+          terraform init
+      
+      - name: Terraform Plan
+        working-directory: terraform
+        run:
+          terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        run:
+          terraform apply tfplan
