@@ -1,11 +1,12 @@
 on:
+  workflow_dispatch:
   pull_request:
     types:
       - closed
     branches:
       - 'main'
     paths:
-      - './.github/workflows/terraform-poc.yml'
+      - '.github/workflows/terraform-poc.yml'
 
 env:
   TAG_NAME: v${{ github.event.number }}
