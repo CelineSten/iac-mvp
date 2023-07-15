@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+            
       - name: Echo
         run:
           echo "The PR was merged. Creating release $TAG_NAME"
