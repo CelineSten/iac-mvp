@@ -2,7 +2,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  tf-plan:
+  deploy-tf:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
