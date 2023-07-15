@@ -6,7 +6,7 @@ on:
     branches:
       - 'main'
     paths:
-      - '.github/workflows/terraform-poc.yml'
+      - .github/workflows/terraform-poc.yml
 
 env:
   TAG_NAME: v${{ github.event.number }}
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Echo
         run:
-          echo "The PR was merged"
+          echo "The PR was merged. Creating release $TAG_NAME"
 
       - name: Create Tag
         run: |
