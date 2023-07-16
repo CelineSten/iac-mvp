@@ -39,5 +39,6 @@ jobs:
           terraform plan -out=tfplan
 
       - name: Terraform Apply
+        working-directory: terraform
         run:
           terraform apply tfplan
