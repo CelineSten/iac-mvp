@@ -11,9 +11,9 @@ jobs:
     uses: ./.github/workflows/terraform-plan.yml
     with:
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
-      ARM_CLIENT_ID: {{ vars.ARM_CLIENT_ID }}
-      ARM_TENANT_ID: {{ vars.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: {{ vars.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
 
   manual-approval:
     needs: [terraform-plan]
@@ -28,6 +28,6 @@ jobs:
     uses: ./.github/workflows/terraform-apply.yml
     with:
       ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
-      ARM_CLIENT_ID: {{ vars.ARM_CLIENT_ID }}
-      ARM_TENANT_ID: {{ vars.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: {{ vars.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
