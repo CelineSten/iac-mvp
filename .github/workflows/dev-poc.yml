@@ -3,7 +3,7 @@ on:
 
 jobs:
   terraform-deploy:
-    uses: ./.github/workflows/terraform-poc.yml@v7
+    uses: CelineSten/iac-mvp/.github/workflows/terraform-poc.yml@v7
     with:
       ARM_CLIENT_ID: {{ vars.ARM_CLIENT_ID }}
       ARM_TENANT_ID: {{ vars.ARM_TENANT_ID }}
