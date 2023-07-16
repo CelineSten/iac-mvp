@@ -6,7 +6,7 @@ on:
         type: string
 
 jobs:
-  tf-plan:
+  terraform-plan:
     runs-on: ubuntu-latest
     environment: ${{ inputs.ENVIRONMENT }}
     steps:
