@@ -6,7 +6,7 @@ on:
         type: string
 
 jobs:
-  tf-apply:
+  terraform-apply:
     needs: [manual-approval]
     runs-on: ubuntu-latest
     environment: ${{ inputs.ENVIRONMENT }}

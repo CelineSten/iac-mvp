@@ -1,8 +1,21 @@
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ARM_CLIENT_ID:
+        description: 'Azure client ID'
+        type: string
+        required: true
+      ARM_TENANT_ID:
+        description: 'Azure tenant ID'
+        type: string
+        required: true
+      ARM_SUBSCRIPTION_ID:
+        description: 'Azure subscription ID'
+        type: string
+        required: true
 
 jobs:
-  deploy-tf:
+  terraform-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -11,9 +24,9 @@ jobs:
       - name: AZ CLI login
         uses: azure/login@v1
         with:
-          client-id: {{ vars.ARM_CLIENT_ID }}
-          tenant-id: {{ vars.ARM_TENANT_ID }}
-          subscription-id: {{ vars.ARM_SUBSCRIPTION_ID }}
+          client-id: {{ inputs.ARM_CLIENT_ID }}
+          tenant-id: {{ inputs.ARM_TENANT_ID }}
+          subscription-id: {{ inputs.ARM_SUBSCRIPTION_ID }}
         
       - name: Terraform Init
         working-directory: terraform
@@ -28,4 +41,3 @@ jobs:
       - name: Terraform Apply
         run:
           terraform apply tfplan
-          
