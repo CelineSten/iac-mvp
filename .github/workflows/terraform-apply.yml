@@ -4,6 +4,18 @@ on:
       ENVIRONMENT:
         required: true
         type: string
+      ARM_CLIENT_ID:
+        description: 'Azure client ID'
+        type: string
+        required: true
+      ARM_TENANT_ID:
+        description: 'Azure tenant ID'
+        type: string
+        required: true
+      ARM_SUBSCRIPTION_ID:
+        description: 'Azure subscription ID'
+        type: string
+        required: true
 
 permissions:
   id-token: write
@@ -14,6 +26,9 @@ jobs:
     needs: [manual-approval]
     runs-on: ubuntu-latest
     environment: ${{ inputs.ENVIRONMENT }}
+    env:
+      TF_VAR_subscription_id: ${{ inputs.ARM_SUBSCRIPTION_ID }}
+      TF_VAR_resource_group_name: ${{ inputs.RESOURCE_GROUP_NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -21,9 +36,9 @@ jobs:
       - name: AZ CLI login
         uses: azure/login@v1
         with:
-          client-id: ${{ vars.ARM_CLIENT_ID }}
-          tenant-id: ${{ vars.ARM_TENANT_ID }}
-          subscription-id: ${{ vars.ARM_SUBSCRIPTION_ID }}
+          client-id: ${{ inputs.ARM_CLIENT_ID }}
+          tenant-id: ${{ inputs.ARM_TENANT_ID }}
+          subscription-id: ${{ inputs.ARM_SUBSCRIPTION_ID }}
 
       - name: Get Plan
         uses: actions/download-artifact@v3
